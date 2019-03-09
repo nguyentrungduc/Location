@@ -140,6 +140,26 @@ PRIORITY_NO_POWER
           
 ### Displaying a Location Address
 - Khi ta lấy lastLocation() và updateLocation đêu mô tả vị trí dưới dạng location với vĩ độ và kinh độ. Để chuyển thành địa chỉ tương ứng ta sử dụng Geocoder API của Android, quá trình này gọi là Geocoding.
+- Để chuyển từ kinh độ vĩ độ ra danh sách địa chỉ ta sử dụng phương thức getFromLocation(), method tốn khá nhiều thời gian nên ta cần phải sử dụng Intent Service để thực hiện nó. 
+- Tại sao không nên sử dụng AsyncTask? Nó cũng là 1 cách cho chúng ta sử lý bất đồng bộ, nhưng nó đc thiết kế để tạo task chạy ngắn, asyctask không nên giữ 1 tham chiếu đến UI nếu hoạt động đc create, ví dụ như xoay thiết bị. Ngược lại Intent Service ko bị hủy khi xoay thiết bị
+
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+              package="com.google.android.gms.location.sample.locationaddress" >
+              <application
+                  ...
+                  <service
+                      android:name=".FetchAddressIntentService"
+                      android:exported="false"/>
+              </application>
+              ...
+          </manifest>
+
+- Mã hóa địa ly ngược
+          
+          override fun onHandleIntent(intent: Intent?) {
+              val geocoder = Geocoder(this, Locale.getDefault())
+              // ...
+          }
 
 
 
