@@ -1,5 +1,8 @@
 # Location
-### Google Play Services location API
+# Geocoding (mã hóa địa lý)
+- Mã hóa địa lý là quá trình chuyển đổi địa chỉ (như "1600 Amphitheater Parkway, Mountain View, CA") thành tọa độ địa lý (như vĩ độ 37,423021 và kinh độ -122,083739), mà bạn có thể sử dụng để đặt điểm đánh dấu trên bản đồ hoặc định vị bản đồ.
+- Reverse geocoding  là quá trình chuyển đổi tọa độ địa lý thành địa chỉ có thể đọc được của con người.
+# Google Play Services location API
 ## Context
 - Một trong những tính tăng độc đáo của ứng dụng di động là nhận thức vị trí. Người dùng di động mang theo thiết bị của họ ở mọi nơi và thêm nhận thức về vị trí vào ứng dụng của bạn sẽ mang đến cho người dùng trải nghiệm theo ngữ cảnh nhiều hơn.Location API khả dụng trong các dịch vụ Google Play tạo điều kiện cho việc thêm nhận thức vị trí vào ứng dụng của bạn với tính năng theo dõi vị trí tự động, định vị địa lý và nhận dạng hoạt động.
 ## Get the last known location
@@ -134,6 +137,9 @@ PRIORITY_NO_POWER
           private fun stopLocationUpdates() {
               fusedLocationClient.removeLocationUpdates(locationCallback)
           }
+          
+### Displaying a Location Address
+- Khi ta lấy lastLocation() và updateLocation đêu mô tả vị trí dưới dạng location với vĩ độ và kinh độ. Để chuyển thành địa chỉ tương ứng ta sử dụng Geocoder API của Android, quá trình này gọi là Geocoding.
 
 
 
