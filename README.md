@@ -29,6 +29,9 @@
                           });
           }
           
+- Để sử dụng Google Play Service : https://developers.google.com/android/guides/setup
+- Ứng dụng sử dụng location service phải 
+          
 
 
 
