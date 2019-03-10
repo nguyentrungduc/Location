@@ -264,10 +264,27 @@ list rỗng. Nếu không có dịch vụ mã hóa địa lý phụ trợ có s�
               }
           }
 
-### Optimize location for battery
-- 
+## Optimize location for battery
+- Trên android 8.0 có 1 số sự thay đổi về việc chạy background location để ứng dụng tiết kiệm pin hơn:
+1. Chế độ background cập nhật vị trí location chỉ đc cập nhật vài h 1 lần
+2. Việc quét wifi sẽ nghiêm ngặt hơn và việc update location không đc cập nhật nếu thiết bị ko thay đổi nơi bắt wifi
+3. Geocencing sẽ thay đổi từ chục s - > 2 phút -> tốt hơn 10 lần tiết kiệm pin
 
-          
+### Understand battery drain
+- Việt thu thập dữ liệu về location có liên quan trực tiếp đến độ tiêu thụ pin bằng các khía cạnh sau:
+1. Độ chính xác: Độ chính xác của location. Càng chính xác càng hao pin
+2. Tần suất. Tần suất càng cao -> càng hao
+3. Đỗ trễ, trễ càng ít -> càng hao
+
+### Độ chính xác
+- Độ chính xác với location phụ thuộc vào việc ta set Priority 
+- PRIORITY_HIGH_ACCURACY : cung cấp location chính xác nhất có thể, được tính toán bằng cách sử dụng nhiều đầu vào như GPS, wifi... -> hao vl
+- PRIORITY_BALANCED_POWER_ACCURACY: cung cấp location chính xác nhưng tối ưu hơn cái trên, ít sử dụng GPS, đa số sử dụng wifi và thông tin location của thiết bị
+- PRIORITY_LOW_POWER: chủ yếu dựa vào cell tower ít sử dụng GPS hay wifi -> độ chính xác mức thành phố -> mức tiêu thụ rất ít
+- PRIORITY_NO_POWER nhận vị trí thụ động từ các ứng dụng khác mà vị trí đã được tính toán.
+-> Tùy nhu cầu mà ta set Prority khác nhau..
+### Tần suất
+- Ta có thể chỉ định tần suất bằng 2 cách setinterval() :  để chỉ định khoảng thời gian mà vị trí được tính cho app. setFastestInterval() : để chỉ định khoảng thời gian mà vị trí được tính cho các ứng dụng khác được gửi đến ứng dụng 
 
 
 
