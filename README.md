@@ -225,13 +225,14 @@ list rỗng. Nếu không có dịch vụ mã hóa địa lý phụ trợ có s�
               }
           }
           
+- Start Intent Service
+
           class MainActivity : AppCompatActivity(), ConnectionCallbacks, OnConnectionFailedListener {
 
               private var lastLocation: Location? = null
               private lateinit var resultReceiver: AddressResultReceiver
 
               // ...
-
               private fun startIntentService() {
 
                   val intent = Intent(this, FetchAddressIntentService::class.java).apply {
@@ -241,7 +242,8 @@ list rỗng. Nếu không có dịch vụ mã hóa địa lý phụ trợ có s�
                   startService(intent)
               }
           }
-          
+- Nhận kết quả geocoding
+
           class MainActivity : AppCompatActivity() {
               // ...
               internal inner class AddressResultReceiver(handler: Handler) : ResultReceiver(handler) {
