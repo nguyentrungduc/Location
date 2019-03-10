@@ -263,6 +263,10 @@ list rỗng. Nếu không có dịch vụ mã hóa địa lý phụ trợ có s�
                   }
               }
           }
+
+### Optimize location for battery
+- 
+
           
 
 
