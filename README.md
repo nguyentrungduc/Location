@@ -295,8 +295,10 @@ list rỗng. Nếu không có dịch vụ mã hóa địa lý phụ trợ có s�
 - TH2: Một ứng dụng thời tiết muốn biết location của thiết bị -> sử dụng getLastLocation() -> lấy vị trí cuối cùng của thiết bị + isLocationAvaiable() -> đỡ tốn :))
 - Th3: Cập nhật vị trí của ng dùng tại 1 điểm cụ thể -> addGeofences(GeofencingRequest, PendingIntent). Mỗi ứng dụng có thể đk tối đa 100 geo mỗi lần.
 -> Xóa việc cập nhật vị trí khi ko dùng nữa theo vòng đời activity
+
 -> Sử dụng thời gian chờ setExpirationDuration()
-setExpirationTime(), nhận thông số thể hiện thời gian hết hạn tính bằng mili giây kể từ khi hệ thống khởi động lần cuối.
+
+->setExpirationTime(), nhận thông số thể hiện thời gian hết hạn tính bằng mili giây kể từ khi hệ thống khởi động lần cuối.
 
 
 
