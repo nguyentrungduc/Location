@@ -285,6 +285,9 @@ list rỗng. Nếu không có dịch vụ mã hóa địa lý phụ trợ có s�
 -> Tùy nhu cầu mà ta set Prority khác nhau..
 ### Tần suất
 - Ta có thể chỉ định tần suất bằng 2 cách setinterval() :  để chỉ định khoảng thời gian mà vị trí được tính cho app. setFastestInterval() : để chỉ định khoảng thời gian mà vị trí được tính cho các ứng dụng khác được gửi đến ứng dụng 
+### Độ trễ
+- Ta có thể set độ trễ bằng setMaxWaitTime() : set ddooj trì hoãn việc cập nhật location. Mà nếu ứng dụng ko cần update location ngay lập tức -> dùng phương thức này hiệu quả hơn setInterval()
+- Khi sử dụng geofences, các ứng dụng nên chuyển một giá trị lớn vào  method setNotificationResponsiveness() để bảo toàn năng lượng. Giá trị năm phút hoặc lớn hơn được suggest.
 
 
 
