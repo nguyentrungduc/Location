@@ -282,12 +282,26 @@ list rỗng. Nếu không có dịch vụ mã hóa địa lý phụ trợ có s�
 - PRIORITY_BALANCED_POWER_ACCURACY: cung cấp location chính xác nhưng tối ưu hơn cái trên, ít sử dụng GPS, đa số sử dụng wifi và thông tin location của thiết bị
 - PRIORITY_LOW_POWER: chủ yếu dựa vào cell tower ít sử dụng GPS hay wifi -> độ chính xác mức thành phố -> mức tiêu thụ rất ít
 - PRIORITY_NO_POWER nhận vị trí thụ động từ các ứng dụng khác mà vị trí đã được tính toán.
--> Tùy nhu cầu mà ta set Prority khác nhau..
+
 ### Tần suất
 - Ta có thể chỉ định tần suất bằng 2 cách setinterval() :  để chỉ định khoảng thời gian mà vị trí được tính cho app. setFastestInterval() : để chỉ định khoảng thời gian mà vị trí được tính cho các ứng dụng khác được gửi đến ứng dụng 
 ### Độ trễ
 - Ta có thể set độ trễ bằng setMaxWaitTime() : set ddooj trì hoãn việc cập nhật location. Mà nếu ứng dụng ko cần update location ngay lập tức -> dùng phương thức này hiệu quả hơn setInterval()
 - Khi sử dụng geofences, các ứng dụng nên chuyển một giá trị lớn vào  method setNotificationResponsiveness() để bảo toàn năng lượng. Giá trị năm phút hoặc lớn hơn được suggest.
+
+->  Tùy nhu cầu mà ta set các thuộc tính khác nhau. 
+ - TH1: Ví dụ ứng dụng bản đồ cần cập nhật thường xuyên, chính xác với độ trễ rất thấp. Tất cả các cập nhật xảy ra ở foreground: người dùng bắt đầu activity, tiêu thụ dữ liệu vị trí và sau đó dừng hoạt động sau một thời gian ngắn.
+-> Sử dụng PRIORITY_HIGH_ACCURACY hoặc PRIORITY_BALANCED_POWER_ACCURACY.
+- TH2: Một ứng dụng thời tiết muốn biết location của thiết bị -> sử dụng getLastLocation() -> lấy vị trí cuối cùng của thiết bị + isLocationAvaiable() -> đỡ tốn :))
+- Th3: Cập nhật vị trí của ng dùng tại 1 điểm cụ thể -> addGeofences(GeofencingRequest, PendingIntent). Mỗi ứng dụng có thể đk tối đa 100 geo mỗi lần.
+-> Xóa việc cập nhật vị trí khi ko dùng nữa theo vòng đời activity
+-> Sử dụng thời gian chờ setExpirationDuration()
+setExpirationTime(), nhận thông số thể hiện thời gian hết hạn tính bằng mili giây kể từ khi hệ thống khởi động lần cuối.
+
+
+
+
+
 
 
 
