@@ -160,9 +160,108 @@ PRIORITY_NO_POWER
               val geocoder = Geocoder(this, Locale.getDefault())
               // ...
           }
+          
+- Lấy địa chỉ đường phố từ Geocoder. để lấy kết quả quá trình geocoding, ta cần tạo constanst success hay fail 
 
+          object Constants {
+              const val SUCCESS_RESULT = 0
+              const val FAILURE_RESULT = 1
+              const val PACKAGE_NAME = "com.google.android.gms.location.sample.locationaddress"
+              const val RECEIVER = "$PACKAGE_NAME.RECEIVER"
+              const val RESULT_DATA_KEY = "${PACKAGE_NAME}.RESULT_DATA_KEY"
+              const val LOCATION_DATA_EXTRA = "${PACKAGE_NAME}.LOCATION_DATA_EXTRA"
+          }
 
+- Để có đc địa chỉ đường phố tương ứng, sử dụng getFromLocation(), chuyển địa chỉ vĩ độ và kinh độ từ đối tượng ví trí và số lượng địa chỉ tối đa trả về. Bộ mã hóa địa lý trả về một list địa chỉ. Nếu không tìm thấy địa chỉ nào khớp với vị trí đã cho, nó sẽ trả về một d
+list rỗng. Nếu không có dịch vụ mã hóa địa lý phụ trợ có sẵn, trình mã hóa địa lý trả về null.
 
+          protected fun onHandleIntent(intent: Intent?) {
+              intent ?: return
+
+              var errorMessage = ""
+
+              // Get the location passed to this service through an extra.
+              val location = intent.getParcelableExtra(
+                      Constants.LOCATION_DATA_EXTRA)
+
+              // ...
+
+              var addresses: List<Address> = emptyList()
+
+              try {
+                  addresses = geocoder.getFromLocation(
+                          location.latitude,
+                          location.longitude,
+                          // In this sample, we get just a single address.
+                          1)
+              } catch (ioException: IOException) {
+                  // Catch network or other I/O problems.
+                  errorMessage = getString(R.string.service_not_available)
+                  Log.e(TAG, errorMessage, ioException)
+              } catch (illegalArgumentException: IllegalArgumentException) {
+                  // Catch invalid latitude or longitude values.
+                  errorMessage = getString(R.string.invalid_lat_long_used)
+                  Log.e(TAG, "$errorMessage. Latitude = $location.latitude , " +
+                          "Longitude =  $location.longitude", illegalArgumentException)
+              }
+
+              // Handle case where no address was found.
+              if (addresses.isEmpty()) {
+                  if (errorMessage.isEmpty()) {
+                      errorMessage = getString(R.string.no_address_found)
+                      Log.e(TAG, errorMessage)
+                  }
+                  deliverResultToReceiver(Constants.FAILURE_RESULT, errorMessage)
+              } else {
+                  val address = addresses[0]
+                  // Fetch the address lines using getAddressLine,
+                  // join them, and send them to the thread.
+                  val addressFragments = with(address) {
+                      (0..maxAddressLineIndex).map { getAddressLine(it) }
+                  }
+                  Log.i(TAG, getString(R.string.address_found))
+                  deliverResultToReceiver(Constants.SUCCESS_RESULT,
+                          addressFragments.joinToString(separator = "\n"))
+              }
+          }
+          
+          class MainActivity : AppCompatActivity(), ConnectionCallbacks, OnConnectionFailedListener {
+
+              private var lastLocation: Location? = null
+              private lateinit var resultReceiver: AddressResultReceiver
+
+              // ...
+
+              private fun startIntentService() {
+
+                  val intent = Intent(this, FetchAddressIntentService::class.java).apply {
+                      putExtra(Constants.RECEIVER, resultReceiver)
+                      putExtra(Constants.LOCATION_DATA_EXTRA, lastLocation)
+                  }
+                  startService(intent)
+              }
+          }
+          
+          class MainActivity : AppCompatActivity() {
+              // ...
+              internal inner class AddressResultReceiver(handler: Handler) : ResultReceiver(handler) {
+
+                  override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
+
+                      // Display the address string
+                      // or an error message sent from the intent service.
+                      addressOutput = resultData?.getString(Constants.RESULT_DATA_KEY) ?: ""
+                      displayAddressOutput()
+
+                      // Show a toast message if an address was found.
+                      if (resultCode == Constants.SUCCESS_RESULT) {
+                          showToast(getString(R.string.address_found))
+                      }
+
+                  }
+              }
+          }
+          
 
 
 
