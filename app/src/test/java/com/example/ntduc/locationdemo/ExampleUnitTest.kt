@@ -1,4 +1,4 @@
-package com.example.location
+package com.example.ntduc.locationdemo
 
 import org.junit.Test
 
