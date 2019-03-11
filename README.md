@@ -2,6 +2,12 @@
 # Geocoding (mã hóa địa lý)
 - Mã hóa địa lý là quá trình chuyển đổi địa chỉ (như "1600 Amphitheater Parkway, Mountain View, CA") thành tọa độ địa lý (như vĩ độ 37,423021 và kinh độ -122,083739), mà bạn có thể sử dụng để đặt điểm đánh dấu trên bản đồ hoặc định vị bản đồ.
 - Reverse geocoding  là quá trình chuyển đổi tọa độ địa lý thành địa chỉ có thể đọc được của con người.
+- Trong Android ta sử dụng Geocoder để thực hiện việc này
+- Geocoder để xử lý mã hóa địa lý và mã hóa địa lý ngược. Mã hóa địa lý là quá trình biến đổi địa chỉ đường phố hoặc mô tả khác về vị trí thành tọa độ (vĩ độ, kinh độ). Mã hóa địa lý ngược là quá trình biến đổi tọa độ (vĩ độ, kinh độ) thành địa chỉ (một phần). Lượng chi tiết trong mô tả vị trí mã hóa ngược có thể khác nhau, ví dụ: một chi tiết có thể chứa địa chỉ đường phố đầy đủ của tòa nhà gần nhất, trong khi một chi tiết khác có thể chỉ chứa tên thành phố và mã bưu chính. Class Geocoder yêu cầu backend service không được bao gồm trong core Android framwork. Các phương thức truy vấn Geocoder sẽ trả về một danh sách trống nếu không có dịch vụ phụ trợ trong nền tảng. Sử dụng phương thức isPresent() để xác định xem có Geocoder đc implement chưa
+ - Geocoder(Context context, Locale locale)
+ - getFromLocation(double latitude, double longitude, int maxResults) : List<Address>
+ - getFromLocationName(String locationName, int maxResults, double lowerLeftLatitude, double lowerLeftLongitude, double upperRightLatitude, double upperRightLongitude) : List<Address> 
+- getFromLocationName(String locationName, int maxResults) : List<Address>
 # Location Base Service
 ### Location : Một lớp đại diện cho vị trí địa lý, bao gồm kinh độ và vĩ độ, dấu thời gian và một số info khác như độ cao, vận tốc
 - Tất cả các vị trí được tạo bởi LocationManager được đảm bảo có vĩ độ, kinh độ và dấu thời gian hợp lệ (cả thời gian UTC và thời gian thực trôi qua kể từ khi khởi động), tất cả các tham số khác là tùy chọn.
