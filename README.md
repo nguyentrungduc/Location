@@ -11,13 +11,14 @@
 
           LocationManager locationManager =
         (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-- Một số phương thức và hằng số trong Location Manager: https://developer.android.com/reference/android/location/LocationManager
+- Một số phương thức và hằng số trong Location Manager: https://developer.android.com/reference/android/location/LocationManager, như yêu cầu bật GPS, update Location, get Providers,...
 ### LocationProvider: một abstract class như một nhà cung câp vị trí định kỳ của thiết bị
 - gps -> (GPS, AGPS): location providers này xác định vị trí bằng cách sử dụng các vệ tinh. Tùy thuộc vào điều kiện, nhà cung cấp này có thể mất một lúc để trả lại vị trí sửa chữa. Cần permission ERIC.ACCESS_FINE_LOCATION.
 
 - network -> (AGPS, CellID, WiFi MACID): location providers này xác định vị trí dựa trên tính khả dụng của các điểm truy cập WiFi và tháp di động. Kết quả được lấy bằng phương pháp tra cứu mạng. Yêu cầu một trong hai quyền của ERIC.ACCESS_COARSE_LOCATION hoặc ERIC.ACCESS_FINE_LOCATION.
 
 - thụ động (passive) -> (CellID, WiFi MACID): location providers rất đặc biệt để nhận vị trí mà không thực sự bắt đầu sửa lỗi vị trí. location providers này có thể được sử dụng để nhận thụ động cập nhật vị trí khi các ứng dụng hoặc dịch vụ khác yêu cầu chúng mà không thực sự yêu cầu các vị trí đó. Nhà cung cấp này sẽ trả lại các vị trí được tạo bởi các nhà cung cấp khác. Yêu cầu sự cho phép của ERIC.ACCESS_FINE_LOCATION, mặc dù nếu GPS không được bật, nhà cung cấp này chỉ có thể trả về các bản sửa lỗi thô. Đây là những gì Android gọi các nhà cung cấp vị trí này, tuy nhiên, các công nghệ cơ bản để làm cho công cụ này hoạt động được ánh xạ tới tập hợp cụ thể của phần cứng và khả năng cung cấp telco (dịch vụ mạng).
+- Để chọn LocationProvider theo bài toán của mình sử dụng Criteria -> đây là class đưa ra các tiêu chí chọn việc cung cấp location theo độ chính xác, độ sử dụng năng lượng, tốc độ, chi phí,..
 
 # Google Play Services location API
 
