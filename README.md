@@ -298,8 +298,14 @@ list rỗng. Nếu không có dịch vụ mã hóa địa lý phụ trợ có s�
 
 -> Sử dụng thời gian chờ setExpirationDuration()
 
-->setExpirationTime(), nhận thông số thể hiện thời gian hết hạn tính bằng mili giây kể từ khi hệ thống khởi động lần cuối.
+-> setExpirationTime(), nhận thông số thể hiện thời gian hết hạn tính bằng mili giây kể từ khi hệ thống khởi động lần cuối.
 
+Như đã nói ở trên thời gian update location có thể không theo app mình mà theo app khác ví dụ app A update location 15p 1 lần , app B update 1 phút 1 lần, thi app A nó sẽ thụ động cập nhật vị trí là 1p 1 lần -> ta cũng có thể set thời gian này lại bằng :
+          
+          val request = LocationRequest()
+          request.setInterval(15 * 60 * 1000)
+          request.setFastestInterval(2 * 60 * 1000)
+- Để tiết kiệm pin thì việc setFastestInterval() không nên quá nhỏ 
 
 
 
