@@ -2,7 +2,25 @@
 # Geocoding (mã hóa địa lý)
 - Mã hóa địa lý là quá trình chuyển đổi địa chỉ (như "1600 Amphitheater Parkway, Mountain View, CA") thành tọa độ địa lý (như vĩ độ 37,423021 và kinh độ -122,083739), mà bạn có thể sử dụng để đặt điểm đánh dấu trên bản đồ hoặc định vị bản đồ.
 - Reverse geocoding  là quá trình chuyển đổi tọa độ địa lý thành địa chỉ có thể đọc được của con người.
+# Location Base Service
+### Location : Một lớp đại diện cho vị trí địa lý, bao gồm kinh độ và vĩ độ, dấu thời gian và một số info khác như độ cao, vận tốc
+- Tất cả các vị trí được tạo bởi LocationManager được đảm bảo có vĩ độ, kinh độ và dấu thời gian hợp lệ (cả thời gian UTC và thời gian thực trôi qua kể từ khi khởi động), tất cả các tham số khác là tùy chọn.
+### LocationManager: 
+- Class này cung cấp quyền truy cập vào các dịch vụ định vị hệ thống. Các service này cho phép các ứng dụng có được các bản cập nhật định kỳ về vị trí địa lý của thiết bị hoặc kích hoạt một ứng dụng được chỉ định Intent khi thiết bị đi vào vị trí gần của một vị trí địa lý nhất định.
+- LocationManager là lớp chính thông qua đó ứng dụng của bạn có thể truy cập dịch vụ định vị trên Android. Tương tự như các dịch vụ hệ thống khác, có thể lấy tham chiếu từ việc gọi phương thức getSystemService() 
+
+          LocationManager locationManager =
+        (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+- Một số phương thức và hằng số trong Location Manager: https://developer.android.com/reference/android/location/LocationManager
+### LocationProvider: một abstract class như một nhà cung câp vị trí định kỳ của thiết bị
+- gps -> (GPS, AGPS): location providers này xác định vị trí bằng cách sử dụng các vệ tinh. Tùy thuộc vào điều kiện, nhà cung cấp này có thể mất một lúc để trả lại vị trí sửa chữa. Cần permission ERIC.ACCESS_FINE_LOCATION.
+
+- network -> (AGPS, CellID, WiFi MACID): location providers này xác định vị trí dựa trên tính khả dụng của các điểm truy cập WiFi và tháp di động. Kết quả được lấy bằng phương pháp tra cứu mạng. Yêu cầu một trong hai quyền của ERIC.ACCESS_COARSE_LOCATION hoặc ERIC.ACCESS_FINE_LOCATION.
+
+- thụ động (passive) -> (CellID, WiFi MACID): location providers rất đặc biệt để nhận vị trí mà không thực sự bắt đầu sửa lỗi vị trí. location providers này có thể được sử dụng để nhận thụ động cập nhật vị trí khi các ứng dụng hoặc dịch vụ khác yêu cầu chúng mà không thực sự yêu cầu các vị trí đó. Nhà cung cấp này sẽ trả lại các vị trí được tạo bởi các nhà cung cấp khác. Yêu cầu sự cho phép của ERIC.ACCESS_FINE_LOCATION, mặc dù nếu GPS không được bật, nhà cung cấp này chỉ có thể trả về các bản sửa lỗi thô. Đây là những gì Android gọi các nhà cung cấp vị trí này, tuy nhiên, các công nghệ cơ bản để làm cho công cụ này hoạt động được ánh xạ tới tập hợp cụ thể của phần cứng và khả năng cung cấp telco (dịch vụ mạng).
+
 # Google Play Services location API
+
 ## Context
 - Một trong những tính tăng độc đáo của ứng dụng di động là nhận thức vị trí. Người dùng di động mang theo thiết bị của họ ở mọi nơi và thêm nhận thức về vị trí vào ứng dụng của bạn sẽ mang đến cho người dùng trải nghiệm theo ngữ cảnh nhiều hơn.Location API khả dụng trong các dịch vụ Google Play tạo điều kiện cho việc thêm nhận thức vị trí vào ứng dụng của bạn với tính năng theo dõi vị trí tự động, định vị địa lý và nhận dạng hoạt động.
 ## Get the last known location
