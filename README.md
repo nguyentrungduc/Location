@@ -9,8 +9,9 @@
  - getFromLocationName(String locationName, int maxResults, double lowerLeftLatitude, double lowerLeftLongitude, double upperRightLatitude, double upperRightLongitude) : List<Address> 
 - getFromLocationName(String locationName, int maxResults) : List<Address>
 # Location Base Service
+ - Android cung cấp cho ứng dụng của bạn quyền truy cập vào các dịch vụ định vị được thiết bị hỗ trợ thông qua các lớp trong package android.location
 ### Location : Một lớp đại diện cho vị trí địa lý, bao gồm kinh độ và vĩ độ, dấu thời gian và một số info khác như độ cao, vận tốc
-- Tất cả các vị trí được tạo bởi LocationManager được đảm bảo có vĩ độ, kinh độ và dấu thời gian hợp lệ (cả thời gian UTC và thời gian thực trôi qua kể từ khi khởi động), tất cả các tham số khác là tùy chọn.
+- Tất cả các location được tạo bởi LocationManager được đảm bảo có vĩ độ, kinh độ và dấu thời gian hợp lệ (cả thời gian UTC và thời gian thực trôi qua kể từ khi khởi động), tất cả các tham số khác là tùy chọn.
 ### LocationManager: 
 - Class này cung cấp quyền truy cập vào các dịch vụ định vị hệ thống. Các service này cho phép các ứng dụng có được các bản cập nhật định kỳ về vị trí địa lý của thiết bị hoặc kích hoạt một ứng dụng được chỉ định Intent khi thiết bị đi vào vị trí gần của một vị trí địa lý nhất định.
 - LocationManager là lớp chính thông qua đó ứng dụng của bạn có thể truy cập dịch vụ định vị trên Android. Tương tự như các dịch vụ hệ thống khác, có thể lấy tham chiếu từ việc gọi phương thức getSystemService() 
