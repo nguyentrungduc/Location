@@ -299,6 +299,27 @@ list rỗng. Nếu không có dịch vụ mã hóa địa lý phụ trợ có s�
               }
           }
 
+### Geofencing
+- Geofencing (vùng địa lý) nó là một ý tưởng thiết lập các fence (hàng rào) xung quanh khu vực nhất định, cho phép ta tính bán kính khu vực đã rào lại, Với area này ta có thể làm một số phương thức với nó như enter, exit, dwell ...
+- Ví dụ: Ứng dụng của hãng hàng không có thể xác định vị trí địa lý xung quanh sân bay khi đặt chỗ chuyến bay gần giờ lên máy bay. Khi thiết bị vượt qua vùng địa lý, ứng dụng có thể gửi thông báo đưa người dùng đến một hoạt động cho phép họ nhận thẻ lên máy bay.
+-> Tạo Geofencing cho sân bay, tạo Intent Service sử lý các sự kiện vào ra trên geo đó sau đó bắn ra 
+- API Geofenced sử dụng thông minh các cảm biến của thiết bị để phát hiện chính xác vị trí của thiết bị theo cách tiết kiệm pin.
+- Ta có thể tạo nhiều hàng rào địa lý nhưng max là 100
+- Ta có thể tạo danh sách các đối tượng geofence bằng cách đặt các loại vĩ độ, kinh độ, bán kính, thời lượng và các loại chuyển tiếp của từng geofence. Các loại chuyển đổi cho biết các sự kiện kích hoạt geofence, chẳng hạn như khi người dùng vào hoặc thoát một geofence.
+
+          geofenceList.add(Geofence.Builder()
+                  .setRequestId(entry.key)
+                  .setCircularRegion(
+                          entry.value.latitude,
+                          entry.value.longitude,
+                          Constants.GEOFENCE_RADIUS_IN_METERS
+                  )
+                  .setExpirationDuration(Constants.GEOFENCE_EXPIRATION_IN_MILLISECONDS)
+                  .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
+                  .build())
+                  
+- Ta có thể thêm chúng vào list danh sách địa lý, khi đến
+
 ## Optimize location for battery
 - Trên android 8.0 có 1 số sự thay đổi về việc chạy background location để ứng dụng tiết kiệm pin hơn:
 1. Chế độ background cập nhật vị trí location chỉ đc cập nhật vài h 1 lần
