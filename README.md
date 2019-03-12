@@ -53,6 +53,13 @@
             <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
           </manifest>
           
+- Với api > 23 check permission run time
+
+          if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+
+                 ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION  },
+                                                     LocationService.MY_PERMISSION_ACCESS_COURSE_LOCATION );
+             }
 ### Sample 
           private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -317,6 +324,29 @@ list rỗng. Nếu không có dịch vụ mã hóa địa lý phụ trợ có s�
                   .setExpirationDuration(Constants.GEOFENCE_EXPIRATION_IN_MILLISECONDS)
                   .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
                   .build())
+                  
+- Tạo service khi đi ra hay vào geo thì bắn noti
+
+       protected void onHandleWork(Intent intent) {
+           GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
+           if (geofencingEvent.hasError()) {
+               String errorMessage = GeofenceErrorMessages.getErrorString(this,
+                       geofencingEvent.getErrorCode());
+               Log.e(TAG, errorMessage);
+               return;
+           }
+           int geofenceTransition = geofencingEvent.getGeofenceTransition();
+           if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER ||
+                   geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
+               List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
+               String geofenceTransitionDetails = getGeofenceTransitionDetails(geofenceTransition,
+                       triggeringGeofences);
+               sendNotification(geofenceTransitionDetails);
+               Log.i(TAG, geofenceTransitionDetails);
+           } else {
+               Log.e(TAG, getString(R.string.geofence_transition_invalid_type, geofenceTransition));
+           }
+       }
                   
 - Ta có thể thêm chúng vào list danh sách địa lý, khi đến
 
